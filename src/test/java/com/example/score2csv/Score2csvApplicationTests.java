@@ -31,8 +31,10 @@ class Score2csvApplicationTests {
 
     @Test
     void scoreTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/score").contentType(MediaType.APPLICATION_JSON).content("{\"datetime\": \"2023-04-01T11:08:24.923475\", \"username\": \"th,ijs\", \"email\": \"thij,s@abc.com\", \"score\": 7}\n")).andDo(print())
-              .andExpect(status().isOk()).andExpect(content().string("Input[datetime=2023-04-01T11:08:24.923475, username=thijs, email=thijs@abc.com, score=7]"));
+        String postContent = "{\"datetime\": \"2023-04-01T11:08:24.923475\", \"username\": \"th,ijs\", \"email\": \"thij,s@abc.com\", \"score\": 7}\n";
+        String expectedContent = "Input[datetime=2023-04-01T11:08:24.923475, username=thijs, email=thijs@abc.com, score=7]";
+        mockMvc.perform(MockMvcRequestBuilders.post("/score").contentType(MediaType.APPLICATION_JSON).content(postContent)).andDo(print())
+              .andExpect(status().isOk()).andExpect(content().string(expectedContent));
     }
 
 }
