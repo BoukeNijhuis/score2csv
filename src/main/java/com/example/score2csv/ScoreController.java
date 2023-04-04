@@ -1,5 +1,6 @@
 package com.example.score2csv;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,15 +27,14 @@ public class ScoreController {
     }
 
     @PostMapping("/score")
-    public String score(@RequestBody Input input) throws IOException {
+    public HttpStatus score(@RequestBody Input input) throws IOException {
 
         // check if the file contains a line starting with the username
         File file = new File(fileLocation);
 
-        if (doesUsernameExistInFile(input, file))
-        {
+        if (doesUsernameExistInFile(input, file)) {
             System.err.println("Username '" + input.username() + "' already exists in the file (" + input + ")");
-            return "Username already exists";
+            return HttpStatus.CONFLICT;
         }
 
         // username does not exist, so add a line to the file
@@ -44,14 +44,15 @@ public class ScoreController {
         fileWriter.append(line);
         fileWriter.close();
 
-        return input.toString();
+        return HttpStatus.CREATED;
     }
 
     private boolean doesUsernameExistInFile(Input input, File file) throws IOException {
         if (file.exists()) {
+            String username = input.username() + ",";
             List<String> strings = Files.readAllLines(file.toPath());
             for (String string : strings) {
-                if (string.startsWith(input.username())) {
+                if (string.startsWith(username)) {
                     return true;
                 }
             }

@@ -44,4 +44,14 @@ class ScoreControllerTest {
 
         assertEquals(1, Files.readAllLines(new File(fileName).toPath()).size());
     }
+
+    @Test
+    void shouldCheckUpToAndIncludingTheFirstComma() throws Exception {
+        Input input = new Input(LocalDateTime.now(), "fred2", "fred@abc.com", 3);
+        scoreController.score(input);
+        Input input2 = new Input(LocalDateTime.now(), "fred", "klaas@abc.com", 4);
+        scoreController.score(input2);
+
+        assertEquals(2, Files.readAllLines(new File(fileName).toPath()).size());
+    }
 }
