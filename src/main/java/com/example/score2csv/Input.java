@@ -3,7 +3,7 @@ package com.example.score2csv;
 import java.time.LocalDateTime;
 
 /**
- * {'datetime': '2023-04-01T11:08:24.923475', 'username': 'thijs', 'email': 'thijs@abc.com', 'score': 7}
+ * {"datetime": "2023-04-01T11:08:24.923475", "username": "thijs", "email": "thijs@abc.com", "score": 7}
  */
 public record Input(
         LocalDateTime datetime,
